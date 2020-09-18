@@ -12,6 +12,25 @@ PjObjectTest >> testNewObjectHasNoEnumeratableKeys [
 ]
 
 { #category : #testing }
+PjObjectTest >> testPerformWithMoreArgsThanRequired [
+	| argsInJs argsInPharo messageCreationBlock |
+	messageCreationBlock := [|obj|
+		obj := PjDnuTestObject new.
+		obj perform: #foo withArguments: #(1 2).
+		obj dnuMessage arguments].
+	argsInPharo := messageCreationBlock value.
+	self assert: argsInPharo size equals: 2.
+	self assert: argsInPharo first equals: 1.
+	self assert: argsInPharo last equals: 2.
+	self bridge loadClass: PjDnuTestObject.
+	argsInJs := self evalBlock: messageCreationBlock.
+	self assert: argsInJs size equals: messageCreationBlock size.
+	self assert: argsInJs first equals: argsInPharo first.
+	self assert: argsInJs last equals: argsInPharo last.
+
+]
+
+{ #category : #testing }
 PjObjectTest >> testPrintString [
 	self assert: [ Object new printString ] evaluatesTo: 'an Object'.
 	self assert: [ PjSet new printString ] evaluatesTo: 'a PjSet'.
