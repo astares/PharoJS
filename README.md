@@ -35,7 +35,7 @@ Learn more about PharoJS:
 
 To install PharoJS, perform the code appropriate to your Pharo version in a playground:
 
-### Pharo 9
+### Pharo 9 and Pharo 10
 
 ```smalltalk
 Metacello new
